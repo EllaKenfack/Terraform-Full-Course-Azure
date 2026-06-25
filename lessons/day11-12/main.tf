@@ -33,7 +33,7 @@ resource_name = formatdate("YYYYMMDD",local.current_time)
 tag_date = formatdate("DD-MM-YYYY",local.current_time)
 
 #assignment 12
-config_content = sensitive(file(config.json))
+#config_content = sensitive(file(config.json))
 
 }
 
@@ -131,6 +131,6 @@ output "resource_tag" {
   
 }
 
-output "config_loaded" {
-  value = nonsensitive(jsondecode(local.config_content))
-}
+#output "config_loaded" {
+#  value = nonsensitive(jsondecode(local.config_content))
+#}

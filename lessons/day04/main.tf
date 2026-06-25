@@ -3,11 +3,12 @@ terraform {
     azurerm = {
         source = "hashicorp/azurerm"
         version = "~> 4.8.0"
+        
     }
   }
   backend "azurerm" {
     resource_group_name  = "tfstate-day04"  # Can be passed via `-backend-config=`"resource_group_name=<resource group name>"` in the `init` command.
-    storage_account_name = "day0417691"                      # Can be passed via `-backend-config=`"storage_account_name=<storage account name>"` in the `init` command.
+    storage_account_name = "day0410034"                      # Can be passed via `-backend-config=`"storage_account_name=<storage account name>"` in the `init` command.
     container_name       = "tfstate"                       # Can be passed via `-backend-config=`"container_name=<container name>"` in the `init` command.
     key                  = "dev.terraform.tfstate"        # Can be passed via `-backend-config=`"key=<blob key name>"` in the `init` command.
   }
@@ -18,7 +19,7 @@ provider "azurerm" {
     features {
       
     }
-  
+    subscription_id = "f229c625-10aa-43e8-87b6-4d254497b238"
 }
 
 resource "azurerm_resource_group" "example" {
@@ -28,7 +29,7 @@ resource "azurerm_resource_group" "example" {
 
 resource "azurerm_storage_account" "example" {
  
-  name                     = "techtutorial101"
+  name                     = "ellatutorialial101"
   resource_group_name      = azurerm_resource_group.example.name
   location                 = azurerm_resource_group.example.location # implicit dependency
   account_tier             = "Standard"

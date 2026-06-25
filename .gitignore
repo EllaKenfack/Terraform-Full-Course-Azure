@@ -33,6 +33,12 @@ terraform.rc
 # Ignore backups of Terraform files
 *.tf.backup
 
+# Ignore the environment variables file
+.env
+
+# Ignore all shell script files anywhere in the project
+*.sh
+
 # Miscellaneous
 .DS_Store
 Thumbs.db
