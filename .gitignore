@@ -39,6 +39,9 @@ terraform.rc
 # Ignore all shell script files anywhere in the project
 *.sh
 
+# Ignore ssh keys
+.ssh/
+
 # Miscellaneous
 .DS_Store
 Thumbs.db

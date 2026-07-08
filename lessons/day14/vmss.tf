@@ -1,15 +1,15 @@
-
-
 resource "azurerm_orchestrated_virtual_machine_scale_set" "vmss_terraform_tutorial" {
-  name                        = "vmss-terraform"
+  name                        = local.resource_naming.vmss_name
   resource_group_name         = azurerm_resource_group.rg.name
   location                    = azurerm_resource_group.rg.location
-  sku_name                    = "Standard_D2s_v4"
-  instances                   = 3
-  platform_fault_domain_count = 1     # For zonal deployments, this must be set to 1
-  zones                       = ["1"] # Zones required to lookup zone in the startup script
+  sku_name                    = local.vm_sku
+  instances                   = var.default_instances
+  platform_fault_domain_count = 1
+  zones                       = ["1"]
+  tags                        = local.common_tags
 
   user_data_base64 = base64encode(file("user-data.sh"))
+
   os_profile {
     linux_configuration {
       disable_password_authentication = true
@@ -23,10 +23,11 @@ resource "azurerm_orchestrated_virtual_machine_scale_set" "vmss_terraform_tutori
 
   source_image_reference {
     publisher = "Canonical"
-    offer     = "0001-com-ubuntu-server-jammy"
-    sku       = "22_04-LTS-gen2"
+    offer     = "0001-com-ubuntu-server-focal"
+    sku       = "20_04-LTS-gen2"
     version   = "latest"
   }
+
   os_disk {
     storage_account_type = "Premium_LRS"
     caching              = "ReadWrite"
@@ -40,7 +41,7 @@ resource "azurerm_orchestrated_virtual_machine_scale_set" "vmss_terraform_tutori
     ip_configuration {
       name                                   = "ipconfig"
       primary                                = true
-      subnet_id                              = azurerm_subnet.subnet.id
+      subnet_id                              = azurerm_subnet.app_subnet.id
       load_balancer_backend_address_pool_ids = [azurerm_lb_backend_address_pool.bepool.id]
     }
   }
@@ -49,10 +50,7 @@ resource "azurerm_orchestrated_virtual_machine_scale_set" "vmss_terraform_tutori
     storage_account_uri = ""
   }
 
-  # Ignore changes to the instances property, so that the VMSS is not recreated when the number of instances is changed
   lifecycle {
-    ignore_changes = [
-      instances
-    ]
+    ignore_changes = [instances]
   }
 }

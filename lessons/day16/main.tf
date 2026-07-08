@@ -8,8 +8,8 @@ locals {
 }
 
 resource "azuread_user" "users" {
-  for_each = { for user in local.users: user.first_name => user }
-  
+  for_each = { for key, user in local.users : key => user }
+
   user_principal_name = format("%s%s@%s",
   substr(each.value.first_name,0,1),
   lower(each.value.last_name),

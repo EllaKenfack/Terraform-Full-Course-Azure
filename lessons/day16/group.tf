@@ -4,7 +4,7 @@ resource "azuread_group" "engineering" {
 }
 
 resource "azuread_group_member" "education" {
-  for_each = { for u in azuread_user.users: u.mail_nickname => u if u.department == "Education" }
+  for_each = { for key, user in azuread_user.users : key => user if user.department == "Education" }
 
   group_object_id  = azuread_group.engineering.id
   member_object_id = each.value.id
@@ -16,7 +16,7 @@ resource "azuread_group" "managers" {
 }
 
 resource "azuread_group_member" "managers" {
-  for_each = { for u in azuread_user.users: u.mail_nickname => u if u.job_title == "Manager" }
+  for_each = { for key, user in azuread_user.users : key => user if user.job_title == "Manager" }
 
   group_object_id  = azuread_group.managers.id
   member_object_id = each.value.id
@@ -28,7 +28,7 @@ resource "azuread_group" "engineers" {
 }
 
 resource "azuread_group_member" "engineers" {
-  for_each = { for u in azuread_user.users: u.mail_nickname => u if u.job_title == "Engineer" }
+  for_each = { for key, user in azuread_user.users : key => user if user.job_title == "Engineer" }
 
   group_object_id  = azuread_group.engineers.id
   member_object_id = each.value.id
