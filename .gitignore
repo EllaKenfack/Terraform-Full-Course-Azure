@@ -46,6 +46,9 @@ terraform.rc
 .DS_Store
 Thumbs.db
 
+
+lessons/day18/azure-qr-code
+
 lessons/day27/infra/modules/compute/scripts/1.sh
 lessons/day27/infra/modules/compute/scripts/2.sh
 lessons/day27/infra/backend_key.pem
